@@ -1,4 +1,4 @@
-import { UserEmail, UserId, UserName, UserPhone } from "./imports/Imports";
+import { UserEmail, UserId, UserName, UserPhone } from "../imports/Imports";
 
 /**
  * Represents a user with specific attributes.
@@ -63,7 +63,7 @@ export class User {
     return this.phone.getValue();
   }
 
-/*   
+/*
   get userStartDate(): string {
     return this.dateRange.getStartDate();
   }

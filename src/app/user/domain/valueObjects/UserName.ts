@@ -5,13 +5,13 @@ export class UserName {
   /**
    * Constructs a UserName instance with the provided name.
    * Throws an error if the name is invalid.
-   * 
+   *
    * @param name - The name of the user as a string.
    */
   constructor(private readonly name: string) {
     // Validate the name and throw an error if it is invalid
     if (!this.isValidName()) {
-      throw new Error('Invalid UserName');
+      throw new Error('Invalid UserNameee');
     }
   }
 
@@ -22,9 +22,7 @@ export class UserName {
    * @returns {boolean} True if the name is valid; otherwise, false.
    */
   private isValidName(): boolean {
-    // Regular expression to match names consisting only of alphabetic characters
-    const nameRegex = /^[a-zA-Z]+$/;
-    // Check if the name is non-empty and matches the regex
+    const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚüÜ\s-]+$/;
     return typeof this.name === 'string' && this.name.length > 0 && nameRegex.test(this.name);
   }
 

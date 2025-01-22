@@ -1,29 +1,22 @@
+import { validate as isUuid } from 'uuid';
+
 /**
- * Represents a user's unique identifier with validation.
+ * Represents a user's unique identifier.
  */
 export class UserId {
   /**
    * Constructs a UserId instance with the provided ID.
-   * Throws an error if the ID is invalid.
    * 
    * @param id - The unique identifier for the user as a string.
+   * @throws {Error} If the ID is not a valid UUID.
    */
   constructor(private readonly id: string) {
-    // Validate the ID and throw an error if it is invalid
-    if (!this.isValid()) {
-      throw new Error('Invalid UserId');
+    if (!id || id.trim() === '') {
+      throw new Error('User ID cannot be empty');
     }
-  }
-
-  /**
-   * Validates the ID to ensure it meets the required criteria.
-   * The ID must be a non-empty string and have a length of 5 characters or less.
-   * 
-   * @returns {boolean} True if the ID is valid; otherwise, false.
-   */
-  private isValid(): boolean {
-    // Check if the ID is a non-empty string and does not exceed the maximum length
-    return typeof this.id === 'string' && this.id.length > 0 && this.id.length <= 5;
+    if (!isUuid(id)) {
+      throw new Error('User ID must be a valid UUID');
+    }
   }
 
   /**

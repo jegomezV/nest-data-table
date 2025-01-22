@@ -1,39 +1,42 @@
-import { Column, Entity, PrimaryGeneratedColumn, BeforeInsert, BeforeUpdate } from 'typeorm';
+import { Column, Entity, BeforeInsert, BeforeUpdate, PrimaryColumn } from 'typeorm';
 
-@Entity('users')
-export class TypeOrmUser {
-  @PrimaryGeneratedColumn({ type: 'int' })
-  id: number;
+@Entity("users")
+export class TypeOrmUserEntity {
+  @PrimaryColumn()
+  id: string;
 
-  @Column({ type: 'varchar', length: 100 })
+  @Column()
   name: string;
 
-  @Column({ type: 'varchar', length: 50 })
+  @Column()
   email: string;
 
-  @Column({ type: 'varchar', length: 100 })
+  @Column()
   phone: string;
 
-  @Column({ type: 'varchar', length: 100 })
-  startDate: string;
-
-  @Column({ type: 'varchar', length: 100 })
-  endDate: string;
-
-  @Column({ type: 'varchar', length: 255 })
-  password: string;
-
-  @Column({ type: 'varchar', length: 100, nullable: true })
+  @Column()
   sharedKey: string;
+
+  constructor() {
+    this.id = '';
+    this.name = '';
+    this.email = '';
+    this.phone = '';
+    this.sharedKey = '';
+  }
 
   @BeforeInsert()
   @BeforeUpdate()
   generateSharedKey() {
-    const [firstName, lastName] = this.name.split(' ');
-    if (firstName && lastName) {
-      this.sharedKey = `${firstName.charAt(0)}${lastName}`.toLowerCase();
+    if (this.name) {
+      const [firstName, lastName] = this.name.split(' ');
+      if (firstName) {
+        this.sharedKey = `${firstName.charAt(0)}${(lastName || firstName)}`.toLowerCase();
+      } else {
+        this.sharedKey = 'defaultkey'; // Provide a default value if name is not valid
+      }
     } else {
-      this.sharedKey = '';
+      this.sharedKey = 'defaultkey'; // Provide a default value if name is not valid
     }
   }
 }
